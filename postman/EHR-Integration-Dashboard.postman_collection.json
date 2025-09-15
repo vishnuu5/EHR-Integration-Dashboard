@@ -1,0 +1,247 @@
+{
+  "info": {
+    "name": "EHR Integration Dashboard",
+    "description": "Complete API collection for EHR Integration Dashboard with DrChrono and Epic FHIR endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "drchrono_base_url",
+      "value": "https://drchrono.com/api",
+      "type": "string"
+    },
+    {
+      "key": "epic_base_url",
+      "value": "https://fhir.epic.com",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "DrChrono API",
+      "item": [
+        {
+          "name": "Authentication",
+          "item": [
+            {
+              "name": "Get Access Token",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "liP2aJLIIVMDgrJ7Ekb79i2GBYt2QPWTgac9l6x6"
+                    },
+                    {
+                      "key": "client_secret",
+                      "value": "jGZk4SV3y6Hvbsw45RTUsyzK0YHTBSUc23Bu2VRfIRTPKVQWeyQV9WX7A1RBQMpMGISNVSUCSJLZ1DtlxZo3L882449axtxdJln9odcpYNqlLpY43iUZ496jTHFHbp8s"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "https://drchrono.com/o/token/",
+                  "protocol": "https",
+                  "host": ["drchrono", "com"],
+                  "path": ["o", "token", ""]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Patients",
+          "item": [
+            {
+              "name": "Get All Patients",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{drchrono_base_url}}/patients",
+                  "host": ["{{drchrono_base_url}}"],
+                  "path": ["patients"]
+                }
+              }
+            },
+            {
+              "name": "Get Patient by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{drchrono_base_url}}/patients/:id",
+                  "host": ["{{drchrono_base_url}}"],
+                  "path": ["patients", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "1"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": "Create Patient",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"Ram\",\n  \"last_name\": \"Ram\",\n  \"date_of_birth\": \"1980-01-01\",\n  \"gender\": \"Male\",\n  \"email\": \"ram@example.com\",\n  \"cell_phone\": \"555-0123\"\n}"
+                },
+                "url": {
+                  "raw": "{{drchrono_base_url}}/patients",
+                  "host": ["{{drchrono_base_url}}"],
+                  "path": ["patients"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Appointments",
+          "item": [
+            {
+              "name": "Get All Appointments",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{drchrono_base_url}}/appointments",
+                  "host": ["{{drchrono_base_url}}"],
+                  "path": ["appointments"]
+                }
+              }
+            },
+            {
+              "name": "Create Appointment",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"patient\": 1,\n  \"doctor\": 1,\n  \"scheduled_time\": \"2024-02-01T10:00:00\",\n  \"duration\": 30,\n  \"reason\": \"Regular checkup\"\n}"
+                },
+                "url": {
+                  "raw": "{{drchrono_base_url}}/appointments",
+                  "host": ["{{drchrono_base_url}}"],
+                  "path": ["appointments"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Epic FHIR API",
+      "item": [
+        {
+          "name": "Patients",
+          "item": [
+            {
+              "name": "Get All Patients",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic c2F1bWlrYXR0YWNrY2FwOjhHaHEqQyMyNlZjS2hyIw=="
+                  }
+                ],
+                "url": {
+                  "raw": "{{epic_base_url}}/Patient",
+                  "host": ["{{epic_base_url}}"],
+                  "path": ["Patient"]
+                }
+              }
+            },
+            {
+              "name": "Get Patient by ID",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic c2F1bWlrYXR0YWNrY2FwOjhHaHEqQyMyNlZjS2hyIw=="
+                  }
+                ],
+                "url": {
+                  "raw": "{{epic_base_url}}/Patient/:id",
+                  "host": ["{{epic_base_url}}"],
+                  "path": ["Patient", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "eRpL8kVdrqfXKhnZHGhPfAw3"
+                    }
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Appointments",
+          "item": [
+            {
+              "name": "Get All Appointments",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Basic c2F1bWlrYXR0YWNrY2FwOjhHaHEqQyMyNlZjS2hyIw=="
+                  }
+                ],
+                "url": {
+                  "raw": "{{epic_base_url}}/Appointment",
+                  "host": ["{{epic_base_url}}"],
+                  "path": ["Appointment"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
