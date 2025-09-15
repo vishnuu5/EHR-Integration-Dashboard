@@ -58,7 +58,7 @@ A comprehensive Electronic Health Records (EHR) integration dashboard built with
 
 ## Project Deplyoment
 
-[View project]()
+[View project](https://ehr-integration-dashboard.vercel.app)
 
 ## Installation & Setup
 
